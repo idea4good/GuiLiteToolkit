@@ -1,7 +1,7 @@
 # GuiLite Toolkit - Build Font/Bitmap resource
 GuiLiteToolkit is 200 lines code for building font lattice of [GuiLite](https://github.com/idea4good/GuiLite).
 
-It works with unicode, will help your APP support all languages and symbols over the world.
+It works with unicode, will help your APP support all languages and symbols all over the world.
 
 ## How to use it?
 Step 1: Input the charaters you need.
