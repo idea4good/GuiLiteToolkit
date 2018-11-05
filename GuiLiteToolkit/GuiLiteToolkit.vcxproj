@@ -184,6 +184,8 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BitmapDlg.h" />
+    <ClInclude Include="FontDlg.h" />
     <ClInclude Include="GuiLiteToolkit.h" />
     <ClInclude Include="GuiLiteToolkitDlg.h" />
     <ClInclude Include="Resource.h" />
@@ -191,6 +193,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BitmapDlg.cpp" />
+    <ClCompile Include="FontDlg.cpp" />
     <ClCompile Include="GuiLiteToolkit.cpp" />
     <ClCompile Include="GuiLiteToolkitDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
