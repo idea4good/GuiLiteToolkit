@@ -54,7 +54,7 @@ void CFontDlg::OnBnClickedFont()
 		if (0 != wcslen(logFont.lfFaceName))
 		{
 			mCurrentFontLatticeMap.clear();
-			mCurrentFontName.empty();
+			mCurrentFontName.clear();
 			mCurrentFontHeight = 0;
 			GetStringInfo(mInput, logFont);
 		}
@@ -144,7 +144,7 @@ int CFontDlg::GetCharInfo(wchar_t character, LOGFONT& logFont)
 	return 0;
 }
 
-char* include = "#include \"../core_include/resource.h\"\n\n";
+static char* include = "#include \"../core_include/resource.h\"\n\n";
 void CFontDlg::OnBnClickedGenerate()
 {
 	// TODO: Add your control notification handler code here
