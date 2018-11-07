@@ -103,7 +103,6 @@ bool BitmapDlg::saveFile(char* pixel_data)
 	define_font_info += data_type + strFileName + " ={\n";
 	define_font_info += "    " + std::to_string(width) + ",\n";
 	define_font_info += "    " + std::to_string(height) + ",\n";
-	define_font_info += "    " + std::to_string(width * 2) + ",\n";
 	define_font_info += "    " + std::to_string(16) + ",\n";
 	define_font_info += "    (unsigned char*)raw_data\n};\n";
 	file.write(define_font_info.c_str(), define_font_info.length());

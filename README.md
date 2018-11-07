@@ -1,9 +1,7 @@
 # GuiLite Toolkit - Build Font/Bitmap resource
-GuiLiteToolkit is 200 lines code for building font lattice of [GuiLite](https://github.com/idea4good/GuiLite).
+GuiLiteToolkit is 200 lines code for building font lattice & bitmap of [GuiLite](https://github.com/idea4good/GuiLite).
 
-It works with unicode, will help your APP support all languages and symbols all over the world.
-
-## How to use it?
+## How to build font lattice?
 Step 1: Input the charaters you need.
 
 ![input](doc/input.jpg)
@@ -14,13 +12,14 @@ Step 2: Choose font type you want.
 
 Step 3: Generate CPP files.
 
-![generate](doc/generate.jpg)
+![generate](doc/generate_font.jpg)
 
 Step 4: Add CPP files to your APP project.
 
-![addin](doc/addin.jpg)
+![addin](doc/addin_font.jpg)
 
 ## How to input charaters in your APP?
+It works with unicode(UTF-8), will help your APP support all languages and symbols all over the world.
 ### For Linux - input unicode charaters directly
 e.g: char* my_string = "abc你好"
 ### For Windows Visual studio
@@ -28,6 +27,19 @@ e.g: char* my_string = "abc你好"
  - For 2 bytes code or above, input charaters in code: 
  
  e.g: char* my_string = "abc你好" => char* my_string = "abc\xE4\xBD\xA0\xE5\xA5\xBD"
+
+## How to build bitmap?
+Step 1: Import 24 bits bitmap.
+
+![import bitmap](doc/import_bitmap.jpg)
+
+Step 2: Generate CPP files.
+
+![generate](doc/generate_bitmap.jpg)
+
+Step 3: Add CPP files to your APP project.
+
+![addin](doc/addin_bitmap.jpg)
 
  ## Sample code
  [GuiLite Samples](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/SampleCode/source/ui_tree/Dialog/patient_setup/patient_setup_dlg_xml.cpp)
