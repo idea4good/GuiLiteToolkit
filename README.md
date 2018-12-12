@@ -24,10 +24,10 @@ It works with unicode(UTF-8), will help your APP support all languages and symbo
 e.g: char* my_string = "abc你好"
 ### For Windows Visual studio
  - For ascii code: input directly.
- - For 2 bytes code or above, input charaters in code: 
+ - For 2 bytes code or above, input charaters in code(You can get the code for Chinese word with this [website](https://www.browserling.com/tools/utf8-encode)): 
  
  e.g: char* my_string = "abc你好" => char* my_string = "abc\xE4\xBD\xA0\xE5\xA5\xBD"
-
+ 
 ## How to build bitmap?
 Step 1: Import 24 bits bitmap.
 
