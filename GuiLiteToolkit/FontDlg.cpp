@@ -238,6 +238,11 @@ unsigned char* CFontDlg::CompressFontLattice(unsigned char* p_data, int length, 
 		if (cur_blk.m_value == p_data[i])
 		{
 			cur_blk.m_count++;
+			if (0xFF == cur_blk.m_count && ((i + 1) < length) && (cur_blk.m_value == p_data[i + 1]))
+			{//avoiding cur_blk.m_count overflow, add new block
+				blocks.push_back(cur_blk);//truncate current block
+				cur_blk.m_count = 0;//new block
+			}
 		}
 		else
 		{
