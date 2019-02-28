@@ -170,7 +170,7 @@ void CFontDlg::OnBnClickedGenerate()
 	file.close();
 
 	generate_bt->EnableWindow(true);
-	std::wstring result = L"Generate lattice cpp file success✌\nCompression ratio: " + std::to_wstring(GetCompressionRatio()) + L"%";
+	std::wstring result = L"Generate lattice cpp file success✌\n" + std::to_wstring(GetCompressionRatio()) + L"% of lattice size";
 	MessageBox(result.c_str(), L"\\^o^/");
 }
 
