@@ -24,7 +24,7 @@ It works with unicode(UTF-8), will help your APP support all languages and symbo
 e.g: char* my_string = "abc你好"
 ### For Windows Visual studio
  - For ascii code: input directly.
- - For 2 bytes code or above, input charaters in code(You can get the code for Chinese word with this [website](https://www.browserling.com/tools/utf8-encode)): 
+ - For 2 bytes code or above, input charaters in code(You can get the utf-8 code of Chinese with this [website](https://www.browserling.com/tools/utf8-encode)🔑
  
  e.g: char* my_string = "abc你好" => char* my_string = "abc\xE4\xBD\xA0\xE5\xA5\xBD"
  
@@ -43,3 +43,7 @@ Step 3: Add CPP files to your APP project.
 
  ## Sample code
  [GuiLite Samples](https://github.com/idea4good/GuiLiteSamples/blob/master/HostMonitor/SampleCode/source/ui_tree/Dialog/patient_setup/patient_setup_dlg_xml.cpp)
+
+## Know issue
+1. Letter lattice is all black.
+- Because of DC error, the letter could not be display correctly, so the lattice would be wrong. The workaround is running GuiLiteToolkit in Visual Studio debug mode.

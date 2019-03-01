@@ -14,6 +14,10 @@ CFontLattice::~CFontLattice()
 	{
 		free(p_data);
 	}
+	if (p_compressed_data)
+	{
+		free(p_compressed_data);
+	}
 }
 
 BEGIN_MESSAGE_MAP(CFontDlg, CDialog)
@@ -65,20 +69,20 @@ void CFontDlg::OnBnClickedFont()
 
 int CFontDlg::GetStringInfo(wchar_t* str, LOGFONT& logFont)
 {
+	CClientDC dc(this);
 	int length = wcslen(str);
 	for (int i = 0; i < length; i++)
 	{
-		GetCharInfo(str[i], logFont);
+		GetCharInfo(dc, str[i], logFont);
 	}
 	return 0;
 }
 
-int CFontDlg::GetCharInfo(wchar_t character, LOGFONT& logFont)
+int CFontDlg::GetCharInfo(CClientDC& dc, wchar_t character, LOGFONT& logFont)
 {
 	wchar_t tmp[2] = { 0, 0 };
 	tmp[0] = character;
 
-	CClientDC dc(this);
 	CFont font;
 	font.CreateFontIndirectW(&logFont);
 	dc.SelectObject(&font);
@@ -130,6 +134,7 @@ int CFontDlg::GetCharInfo(wchar_t character, LOGFONT& logFont)
 	mCurrentFontLatticeMap[utf8_code].utf_8_code = utf8_code;
 	mCurrentFontLatticeMap[utf8_code].width = size.cx;
 	mCurrentFontLatticeMap[utf8_code].p_data = pixel_buffer;
+	mCurrentFontLatticeMap[utf8_code].p_compressed_data = CompressFontLattice(pixel_buffer, size.cx * size.cy, mCurrentFontLatticeMap[utf8_code].p_compressed_data_length);
 
 	char name[64];
 	sprintf_s(name, "%ws_%d", logFont.lfFaceName, size.cy);
@@ -165,7 +170,8 @@ void CFontDlg::OnBnClickedGenerate()
 	file.close();
 
 	generate_bt->EnableWindow(true);
-	MessageBox(L"Generate lattice cpp file success✌", L"\\^o^/");
+	std::wstring result = L"Generate lattice cpp file success✌\n" + std::to_wstring(GetCompressionRatio()) + L"% of lattice size";
+	MessageBox(result.c_str(), L"\\^o^/");
 }
 
 int CFontDlg::WriteLatticeDataInCppFile(std::fstream& file)
@@ -181,15 +187,10 @@ int CFontDlg::WriteLatticeDataInCppFile(std::fstream& file)
 		std::string data_name = "_" + (std::to_string(elem.second.utf_8_code));
 
 		std::string define_lattice_data = data_type + data_name + "[] = {\n";
-		for (int y = 0; y < mCurrentFontHeight; y++)
+		for (int i = 0; i < elem.second.p_compressed_data_length; i++)
 		{
-			define_lattice_data += "    ";
-			for (int x = 0; x < elem.second.width; x++)
-			{
-				define_lattice_data += std::to_string(elem.second.p_data[y * elem.second.width + x]);
-				define_lattice_data += ", ";
-			}
-			define_lattice_data += "\n";
+			define_lattice_data += std::to_string(elem.second.p_compressed_data[i]);
+			define_lattice_data += ", ";
 		}
 		define_lattice_data += "};\n";
 		file.write(define_lattice_data.c_str(), define_lattice_data.length());
@@ -214,4 +215,72 @@ int CFontDlg::WriteLatticeDataInCppFile(std::fstream& file)
 
 	file.write(define_font_info.c_str(), define_font_info.length());
 	return 0;
+}
+
+unsigned char* CFontDlg::CompressFontLattice(unsigned char* p_data, int length, int& out_length)
+{
+	class CLatticeBlock
+	{
+	public:
+		CLatticeBlock()
+		{
+			m_value = m_count = 0;
+		}
+		unsigned char m_value;
+		unsigned char m_count;
+	};
+
+	std::vector<CLatticeBlock> blocks;
+	CLatticeBlock cur_blk;
+	cur_blk.m_value = p_data[0];
+	for (int i = 0; i < length; i++)
+	{
+		if (cur_blk.m_value == p_data[i])
+		{
+			cur_blk.m_count++;
+			if (0xFF == cur_blk.m_count && ((i + 1) < length) && (cur_blk.m_value == p_data[i + 1]))
+			{//avoiding cur_blk.m_count overflow, add new block
+				blocks.push_back(cur_blk);//truncate current block
+				cur_blk.m_count = 0;//new block
+			}
+		}
+		else
+		{
+			blocks.push_back(cur_blk);
+			cur_blk.m_value = p_data[i];
+			cur_blk.m_count = 1;
+		}
+	}
+	if (cur_blk.m_count)
+	{
+		blocks.push_back(cur_blk);
+	}
+	
+	out_length = blocks.size() * 2;
+	unsigned char* ret = (unsigned char*)malloc(out_length);
+	int index = 0;
+	for (auto& elem : blocks)
+	{
+		ret[index++] = elem.m_value;
+		ret[index++] = elem.m_count;
+	}
+	return ret;
+}
+
+int CFontDlg::GetCompressionRatio()
+{
+	if (0 == mCurrentFontLatticeMap.size())
+	{
+		return 0;
+	}
+
+	int raw_data_cnt = 0;
+	int compressed_data_cnt = 0;
+	for (auto& elem : mCurrentFontLatticeMap)
+	{
+		raw_data_cnt += elem.second.width * mCurrentFontHeight;
+		compressed_data_cnt += elem.second.p_compressed_data_length;
+	}
+	TRACE(_T("raw_data_cnt = %d, compressed_data_cnt = %d\n"), raw_data_cnt, compressed_data_cnt);
+	return (100 * compressed_data_cnt / raw_data_cnt);
 }
