@@ -69,20 +69,20 @@ void CFontDlg::OnBnClickedFont()
 
 int CFontDlg::GetStringInfo(wchar_t* str, LOGFONT& logFont)
 {
+	CClientDC dc(this);
 	int length = wcslen(str);
 	for (int i = 0; i < length; i++)
 	{
-		GetCharInfo(str[i], logFont);
+		GetCharInfo(dc, str[i], logFont);
 	}
 	return 0;
 }
 
-int CFontDlg::GetCharInfo(wchar_t character, LOGFONT& logFont)
+int CFontDlg::GetCharInfo(CClientDC& dc, wchar_t character, LOGFONT& logFont)
 {
 	wchar_t tmp[2] = { 0, 0 };
 	tmp[0] = character;
 
-	CClientDC dc(this);
 	CFont font;
 	font.CreateFontIndirectW(&logFont);
 	dc.SelectObject(&font);

@@ -26,7 +26,7 @@ public:
 	afx_msg void OnBnClickedFont();
 	afx_msg void OnBnClickedGenerate();
 	DECLARE_MESSAGE_MAP()
-	int GetCharInfo(wchar_t character, LOGFONT& logFont);
+	int GetCharInfo(CClientDC& dc, wchar_t character, LOGFONT& logFont);
 	int GetStringInfo(wchar_t* str, LOGFONT& logFont);
 private:
 	int WriteLatticeDataInCppFile(std::fstream& file);
