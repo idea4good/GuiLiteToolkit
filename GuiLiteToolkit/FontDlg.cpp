@@ -25,7 +25,7 @@ BEGIN_MESSAGE_MAP(CFontDlg, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON2, &CFontDlg::OnBnClickedGenerate)
 END_MESSAGE_MAP()
 
-static wchar_t default_input[] = L"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789(_+=./-\:;@%!#',?)<>🔼🔽";
+static wchar_t default_input[] = L"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789(_+=./-\:;@%!#',?)<>▲▼";
 BOOL CFontDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
