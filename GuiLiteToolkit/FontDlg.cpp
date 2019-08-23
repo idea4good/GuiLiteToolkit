@@ -80,18 +80,15 @@ int CFontDlg::GetStringInfo(wchar_t* str, LOGFONT& logFont)
 
 int CFontDlg::GetCharInfo(CClientDC& dc, wchar_t character, LOGFONT& logFont)
 {
-	wchar_t tmp[2] = { 0, 0 };
-	tmp[0] = character;
-
 	CFont font;
 	font.CreateFontIndirectW(&logFont);
 	dc.SelectObject(&font);
 
 	dc.FillRect(&CRect{ 0, 0, mCurrentFontHeight, mCurrentFontHeight }, &CBrush(RGB(255, 255, 255)));
-	dc.TextOut(0, 0, tmp, wcslen(tmp));
+	dc.TextOut(0, 0, &character, 1);
 
 	SIZE size;
-	GetTextExtentPoint(dc, tmp, 1, &size);
+	GetTextExtentPoint(dc, &character, 1, &size);
 	unsigned char* pixel_buffer = (unsigned char*)malloc(size.cx * size.cy);
 	if (NULL == pixel_buffer)
 	{
@@ -109,7 +106,7 @@ int CFontDlg::GetCharInfo(CClientDC& dc, wchar_t character, LOGFONT& logFont)
 
 	unsigned char utf8_buffer[4];
 	memset(utf8_buffer, 0, sizeof(utf8_buffer));
-	int len = WideCharToMultiByte(CP_UTF8, 0, tmp, -1, (char*)utf8_buffer, sizeof(utf8_buffer), NULL, NULL);
+	int len = WideCharToMultiByte(CP_UTF8, 0, &character, -1, (char*)utf8_buffer, sizeof(utf8_buffer), NULL, NULL);
 
 	unsigned int utf8_code = 0;
 	switch (len - 1)
