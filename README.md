@@ -26,8 +26,8 @@ e.g: char* my_string = "abc你好"
  - For ascii code: input directly.
  - For 2 bytes code or above, input charaters in code(e.g: char* my_string = "abc你好" => char* my_string = "abc **\xE4\xBD\xA0\xE5\xA5\xBD**")
  - How to get utf-8 code of chinese? Visit the websites below:
-  - [Chinese website](http://www.mytju.com/classcode/tools/encode_utf8.asp)
-  - [English website](https://www.browserling.com/tools/utf8-encode)
+    - [Chinese website](http://www.mytju.com/classcode/tools/encode_utf8.asp)
+    - [English website](https://www.browserling.com/tools/utf8-encode)
 
 ### Sample Code
 [Link to HelloFont](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloFont/UIcode/UIcode.cpp)
