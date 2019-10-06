@@ -24,9 +24,11 @@ It works with unicode(UTF-8), will help your APP support all languages and symbo
 e.g: char* my_string = "abc你好"
 ### For Windows Visual studio
  - For ascii code: input directly.
- - For 2 bytes code or above, input charaters in code(You can get the utf-8 code of Chinese with this [website](https://www.browserling.com/tools/utf8-encode)🔑
- 
- e.g: char* my_string = "abc你好" => char* my_string = "abc **\xE4\xBD\xA0\xE5\xA5\xBD**"
+ - For 2 bytes code or above, input charaters in code(e.g: char* my_string = "abc你好" => char* my_string = "abc **\xE4\xBD\xA0\xE5\xA5\xBD**")
+ - How to get utf-8 code of chinese? Visit the websites below:
+  - [Chinese website](http://www.mytju.com/classcode/tools/encode_utf8.asp)
+  - [English website](https://www.browserling.com/tools/utf8-encode)
+
 ### Sample Code
 [Link to HelloFont](https://github.com/idea4good/GuiLiteSamples/blob/master/HelloFont/UIcode/UIcode.cpp)
 
