@@ -27,7 +27,7 @@
 *.lib
 
 # Executables
-*.exe
+GuiLiteToolkit.exe
 *.out
 *.app
 
