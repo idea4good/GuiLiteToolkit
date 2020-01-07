@@ -80,15 +80,16 @@ int CFontDlg::GetStringInfo(wchar_t* str, LOGFONT& logFont)
 
 int CFontDlg::GetCharInfo(CClientDC& dc, wchar_t character, LOGFONT& logFont)
 {
+	wchar_t characterBuffer[2] = { character, 0 };
 	CFont font;
 	font.CreateFontIndirectW(&logFont);
 	dc.SelectObject(&font);
 
 	dc.FillRect(&CRect{ 0, 0, mCurrentFontHeight, mCurrentFontHeight }, &CBrush(RGB(255, 255, 255)));
-	dc.TextOut(0, 0, &character, 1);
+	dc.TextOut(0, 0, characterBuffer, 1);
 
 	SIZE size;
-	GetTextExtentPoint(dc, &character, 1, &size);
+	GetTextExtentPoint(dc, characterBuffer, 1, &size);
 	unsigned char* pixel_buffer = (unsigned char*)malloc(size.cx * size.cy);
 	if (NULL == pixel_buffer)
 	{
@@ -104,23 +105,27 @@ int CFontDlg::GetCharInfo(CClientDC& dc, wchar_t character, LOGFONT& logFont)
 		}
 	}
 
-	unsigned char utf8_buffer[4];
+	unsigned char utf8_buffer[32];
 	memset(utf8_buffer, 0, sizeof(utf8_buffer));
-	int len = WideCharToMultiByte(CP_UTF8, 0, &character, -1, (char*)utf8_buffer, sizeof(utf8_buffer), NULL, NULL);
+	int len = WideCharToMultiByte(CP_UTF8, 0, characterBuffer, -1, (char*)utf8_buffer, sizeof(utf8_buffer), NULL, NULL);
 
 	unsigned int utf8_code = 0;
-	switch (len - 1)
+	switch (len)
 	{
+	case 0:
 	case 1:
+		MessageBox(L"WideCharToMultiByte error!", L"✖✖✖");
+		return -1;
+	case 2:
 		utf8_code = utf8_buffer[0];
 		break;
-	case 2:
+	case 3:
 		utf8_code = (utf8_buffer[0] << 8) | (utf8_buffer[1]);
 		break;
-	case 3:
+	case 4:
 		utf8_code = (utf8_buffer[0] << 16) | (utf8_buffer[1] << 8) | utf8_buffer[2];
 		break;
-	case 4:
+	case 5:
 		utf8_code = (utf8_buffer[0] << 24) | (utf8_buffer[1] << 16) | (utf8_buffer[2] << 8) | utf8_buffer[3];
 		break;
 	default:
