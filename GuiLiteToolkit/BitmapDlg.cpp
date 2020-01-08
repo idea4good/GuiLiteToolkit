@@ -59,7 +59,7 @@ void BitmapDlg::OnBnClickedGenerate()
 	delete[] pixel_data;
 }
 
-static char* include = "#include \"../core_include/resource.h\"\n\n";
+static char* include = "#include \"GuiLite.h\"\n\n";
 bool BitmapDlg::saveFile(char* pixel_data)
 {
 	int width = m_bm_info_header.biWidth;

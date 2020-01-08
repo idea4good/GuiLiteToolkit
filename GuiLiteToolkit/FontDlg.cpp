@@ -151,7 +151,7 @@ int CFontDlg::GetCharInfo(CClientDC& dc, wchar_t character, LOGFONT& logFont)
 	return 0;
 }
 
-static char* include = "#include \"../core_include/resource.h\"\n\n";
+static char* include = "#include \"GuiLite.h\"\n\n";
 void CFontDlg::OnBnClickedGenerate()
 {
 	// TODO: Add your control notification handler code here
