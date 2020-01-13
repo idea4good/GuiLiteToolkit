@@ -39,9 +39,9 @@ void CFontDlg::OnBnClickedFont()
 	// TODO: Add your control notification handler code here
 	memset(mInput, 0, sizeof(mInput));
 	GetDlgItemText(IDC_EDIT1, mInput, sizeof(mInput) / sizeof(wchar_t));
-	if (0 == wcslen(mInput))
+	if (0 == wcslen(mInput) || ((sizeof(mInput) / sizeof(wchar_t)) == wcslen(mInput)))
 	{
-		MessageBox(L"Input characters✍", L"o(╯□╰)o");
+		MessageBox(L"Input no character✍ or input too much⌛️", L"o(╯□╰)o");
 		return;
 	}
 

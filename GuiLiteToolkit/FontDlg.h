@@ -35,5 +35,5 @@ private:
 	std::map<unsigned int, CFontLattice> mCurrentFontLatticeMap;
 	std::string mCurrentFontName;
 	int mCurrentFontHeight;
-	wchar_t mInput[1024];
+	wchar_t mInput[65536];
 };
