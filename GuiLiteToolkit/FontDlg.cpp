@@ -208,7 +208,7 @@ int CFontDlg::WriteLatticeDataInCppFile(std::fstream& file)
 	define_lattice_array += "};\n";
 	file.write(define_lattice_array.c_str(), define_lattice_array.length());
 
-	std::string data_type = "const FONT_INFO ";
+	std::string data_type = "const LATTICE_FONT_INFO ";
 	std::string define_font_info = "extern " + data_type + mCurrentFontName + ";\n";
 	define_font_info += data_type + mCurrentFontName + " ={\n";
 	define_font_info += "    " + std::to_string(mCurrentFontHeight) + ",\n";
